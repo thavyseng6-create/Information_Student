@@ -1,0 +1,1056 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Students Information</title>
+
+<!-- Bootstrap CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+    rel="stylesheet">
+
+<!-- Bootstrap Table CSS -->
+<link rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/bootstrap-table@1.22.0/dist/bootstrap-table.min.css">
+
+<style>
+    body {
+        background-color: #f5f7fa;
+    }
+
+    .card-shadow {
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .modal-header {
+        background-color: #0f2b48;
+        color: white;
+        border-radius: 0.5rem 0.5rem 0 0;
+    }
+
+    .modal-header .btn-close {
+        filter: brightness(0) invert(1);
+    }
+
+    .modal-content {
+        border: none;
+        border-radius: 0.5rem;
+    }
+
+    
+
+    .btn-create {
+        background-color: #28a745;
+        color: white;
+    }
+
+    .btn-create:hover {
+        background-color: #218838;
+        color: white;
+    }
+
+    .btn-close-modal {
+        background-color: #dc3545;
+        color: white;
+    }
+
+    .btn-close-modal:hover {
+        background-color: #c82333;
+        color: white;
+    }
+
+    .btn-add {
+        background-color: #0f2b48;
+        color: white;
+    }
+
+    .btn-add:hover {
+        background-color: #153c66;
+        color: white;
+    }
+
+    .btn-edit {
+        background-color: #28a745;
+        color: white;
+    }
+
+    .btn-edit:hover {
+        background-color: #218838;
+        color: white;
+    }
+
+    .btn-remove {
+        background-color: #dc3545;
+        color: white;
+    }
+
+    .btn-remove:hover {
+        background-color: #c82333;
+        color: white;
+    }
+</style>
+
+
+</head>
+
+<body>
+
+
+<!-- MAIN CONTAINER -->
+
+<div class="container mt-4">
+
+    <h1 class="text-center mb-4">
+        Students Information
+    </h1>
+
+    <!--   ACTION BUTTONS-->
+
+    <div class="mb-3 text-end">
+
+        <button id="addBtn" class="btn btn-add">
+            <strong>+</strong>
+            Add New
+        </button>
+
+        <button id="editBtn" class="btn btn-edit">
+            ✏️ Edit
+        </button>
+
+        <button id="removeBtn" class="btn btn-remove">
+            ✕ Remove
+        </button>
+
+    </div>
+
+    <!--  STUDENT TABLE -->
+
+    <div class="bg-white p-3 rounded card-shadow">
+
+        <table id="studentTable"
+            class="table mb-0"
+            data-search="true"
+            data-pagination="true">
+
+            <thead class="table-light">
+
+                <tr>
+
+                    <th data-field="state"
+                        data-checkbox="true">
+                    </th>
+
+                    <th data-field="id">
+                        ID
+                    </th>
+
+                    <th data-field="fullName">
+                        Full Name
+                    </th>
+
+                    <th data-field="sex">
+                        Sex
+                    </th>
+
+                    <th data-field="phoneNumber">
+                        Phone Number
+                    </th>
+
+                    <th data-field="dob">
+                        DOB
+                    </th>
+
+                    <th data-field="email">
+                        Email
+                    </th>
+
+                </tr>
+
+            </thead>
+
+        </table>
+
+    </div>
+
+</div>
+
+
+<!-- ADD / EDIT MODAL -->
+
+<div class="modal fade"
+    id="studentModal"
+    tabindex="-1"
+    aria-labelledby="modalTitle"
+    aria-hidden="true">
+
+    <div class="modal-dialog modal-dialog-centered">
+
+        <div class="modal-content">
+
+            <!-- MODAL HEADER -->
+
+            <div class="modal-header">
+
+                <h5 class="modal-title" id="modalTitle">
+                    Add New
+                </h5>
+
+                <button type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close">
+                </button>
+
+            </div>
+
+            <!-- FORM -->
+
+            <form id="studentForm">
+                <div class="modal-body">
+
+                    <!-- Hidden ID -->
+
+                    <input type="hidden" id="editId">
+                    <div class="row">
+                        <!-- LEFT COLUMN -->
+                        <div class="col-md-6">
+                            <!-- FULL NAME -->
+
+                            <div class="mb-3">
+
+                                <label class="form-label"> Full Name </label>
+                                <input type="text" class="form-control" id="fullName" placeholder="Enter full name" required>
+                            </div>
+                            <!-- DATE OF BIRTH -->
+                            <div class="mb-3">
+                                <label class="form-label"> Date of Birth </label>
+                                <input type="date" class="form-control" id="dob" required>
+                            </div>
+                            <!-- PHONE NUMBER -->
+
+                            <div class="mb-3">
+
+                                <label class="form-label">Phone Number </label>
+                                <input type="text" class="form-control" id="phoneNumber"  placeholder="Enter phone number" required>
+
+                            </div>
+                        </div>
+
+                        <!-- RIGHT COLUMN -->
+                        <div class="col-md-6">
+                            <!-- SEX -->
+                            <div class="mb-3">
+                                <label class="form-label"> Sex </label>
+                                <select class="form-select"  id="sex"  required>
+                                    <option value=""> Select Sex </option>
+                                    <option value="Male">  Male  </option>
+                                    <option value="Female"> Female</option>
+                                </select>
+
+                            </div>
+
+
+                            <!-- EMAIL -->
+
+                            <div class="mb-3">
+                                <label class="form-label"> Email  </label>
+                                <input type="email"  class="form-control"  id="email"  placeholder="Enter email"  required>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- MODAL FOOTER -->
+
+                <div class="modal-footer justify-content-end">
+                    <button type="submit"
+                        class="btn btn-create">
+                        ✓ Create
+                    </button>
+                    <button type="button"
+                        class="btn btn-close-modal"
+                        data-bs-dismiss="modal">
+                        ✕ Close
+                    </button>
+                </div>
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!--  JAVASCRIPT LIBRARIES -->
+
+<!-- jQuery -->
+
+<script src="https://code.jquery.com/jquery-3.7.1.min.js">
+</script>
+
+
+<!-- Bootstrap JS -->
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js">
+</script>
+
+
+<!-- Bootstrap Table JS -->
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap-table@1.22.0/dist/bootstrap-table.min.js">
+</script>
+
+
+<!-- CUSTOM JAVASCRIPT-->
+
+<script>
+
+    $(document).ready(function () {
+
+
+        // STUDENT DATA
+        
+
+        let students = [
+
+            {
+                id: 1,
+                fullName: 'Kan Marady',
+                sex: 'F',
+                phoneNumber: '093 857 688',
+                dob: '2000-01-01',
+                email: 'test@gmail.com'
+            },
+
+            {
+                id: 2,
+                fullName: 'Siv Meymey',
+                sex: 'F',
+                phoneNumber: '012 333 444',
+                dob: '2000-01-30',
+                email: 'test2@gmail.com'
+            },
+
+            {
+                id: 3,
+                fullName: 'Sivguy Te',
+                sex: 'M',
+                phoneNumber: '097 555 666',
+                dob: '2001-01-01',
+                email: 'test1@gmail.com'
+            }
+
+        ];
+
+        // FORMAT FULL NAME
+    
+        function formatName(name) {
+
+            // Remove spaces at beginning/end
+            name = name.trim();
+            // Remove multiple spaces
+            name = name.replace(/\s+/g, ' ');
+
+            // Convert to lowercase
+            let lowerName = name.toLowerCase();
+
+
+            // ==========================================
+            // KNOWN NAMES
+            // ==========================================
+
+            let knownNames = {
+
+                "sengthavy": "Seng Thavy",
+
+                "kanmarady": "Kan Marady",
+
+                "sivmeymey": "Siv Meymey",
+
+                "sivguyte": "Sivguy Te"
+
+            };
+
+
+            // ==========================================
+            // CHECK WITHOUT SPACE
+            // ==========================================
+
+            let noSpaceName =
+                lowerName.replace(/\s/g, '');
+
+
+            if (knownNames[noSpaceName]) {
+
+                return knownNames[noSpaceName];
+
+            }
+
+
+            // ==========================================
+            // NORMAL NAME WITH SPACE
+            // ==========================================
+
+            return lowerName
+                .split(' ')
+                .map(function (word) {
+
+                    if (word.length === 0) {
+                        return '';
+                    }
+
+                    return word.charAt(0).toUpperCase()
+                        + word.slice(1);
+
+                })
+                .join(' ');
+
+        }
+
+
+        // ==========================================
+        // FORMAT PHONE NUMBER
+        // ==========================================
+
+        function formatPhone(phone) {
+
+            const cleanPhone =
+                phone.replace(/\s/g, '');
+
+
+            // 9 digits
+
+            if (cleanPhone.length === 9) {
+
+                return cleanPhone.replace(
+                    /^(\d{3})(\d{3})(\d{3})$/,
+                    '$1 $2 $3'
+                );
+
+            }
+
+
+            // 10 digits
+
+            if (cleanPhone.length === 10) {
+
+                return cleanPhone.replace(
+                    /^(\d{3})(\d{3})(\d{4})$/,
+                    '$1 $2 $3'
+                );
+
+            }
+
+
+            return cleanPhone;
+
+        }
+
+
+        // ==========================================
+        // CREATE TABLE
+        // ==========================================
+
+        const $table =
+            $('#studentTable').bootstrapTable({
+
+                uniqueId: 'id',
+
+                data: students
+
+            });
+
+
+        // ==========================================
+        // REFRESH TABLE
+        // ==========================================
+
+        function refreshTable() {
+
+            $table.bootstrapTable(
+                'load',
+                students
+            );
+
+        }
+
+
+        // ==========================================
+        // CHECK DUPLICATE PHONE NUMBER
+        // ==========================================
+
+        function isDuplicatePhone(
+            phone,
+            excludeId = null
+        ) {
+
+            const cleanPhone =
+                phone.replace(/\s/g, '');
+
+
+            return students.some(function (student) {
+
+                const existingPhone =
+                    student.phoneNumber.replace(/\s/g, '');
+
+
+                return (
+                    existingPhone === cleanPhone
+                    &&
+                    (
+                        excludeId === null
+                        ||
+                        student.id !== excludeId
+                    )
+                );
+
+            });
+
+        }
+
+
+        // ==========================================
+        // CHECK DUPLICATE EMAIL
+        // ==========================================
+
+        function isDuplicateEmail(
+            email,
+            excludeId = null
+        ) {
+
+            const cleanEmail =
+                email.trim().toLowerCase();
+
+
+            return students.some(function (student) {
+
+                const existingEmail =
+                    student.email.trim().toLowerCase();
+
+
+                return (
+                    existingEmail === cleanEmail
+                    &&
+                    (
+                        excludeId === null
+                        ||
+                        student.id !== excludeId
+                    )
+                );
+
+            });
+
+        }
+
+        // SEARCH BY ID OR FULL NAME
+        $('#studentTable').on(
+            'search.bs.table',
+            function (event, text) {
+
+                const searchText =
+                    text.toLowerCase().trim();
+
+
+                if (searchText === '') {
+
+                    refreshTable();
+
+                    return;
+
+                }
+                const filteredStudents =
+                    students.filter(function (student) {
+
+                        const id =
+                            String(student.id)
+                                .toLowerCase();
+
+
+                        const name =
+                            student.fullName
+                                .toLowerCase();
+
+
+                        return (
+                            id.includes(searchText)
+                            ||
+                            name.includes(searchText)
+                        );
+
+                    });
+
+
+                $table.bootstrapTable(
+                    'load',
+                    filteredStudents
+                );
+
+            }
+        );
+
+        // FORMAT NAME WHEN USER LEAVES INPUT
+        $('#fullName').on(
+            'blur',
+            function () {
+
+                const name =
+                    $(this).val();
+
+
+                $(this).val(
+                    formatName(name)
+                );
+
+            }
+        );
+
+        // PHONE INPUT
+        // ONLY ALLOW NUMBERS AND SPACES
+
+        $('#phoneNumber').on(
+            'input',
+            function () {
+
+                this.value =
+                    this.value.replace(
+                        /[^0-9 ]/g,
+                        ''
+                    );
+            }
+        );
+
+        // ADD NEW BUTTON
+        $('#addBtn').click(function () {
+            $('#modalTitle').text(
+                'Add New'
+            );
+
+            $('#studentForm')[0].reset();
+
+            $('#editId').val('');
+
+            $('#fullName').prop(
+                'disabled',
+                false
+            );
+
+            $('#dob').prop(
+                'disabled',
+                false
+            );
+
+            $('#phoneNumber').prop(
+                'disabled',
+                false
+            );
+
+            $('#sex').prop(
+                'disabled',
+                false
+            );
+
+            $('#email').prop(
+                'disabled',
+                false
+            );
+
+            $('.btn-create').text(
+                '✓ Create'
+            );
+
+            $('#studentModal').modal(
+                'show'
+            );
+        });
+
+        // EDIT BUTTON
+        $('#editBtn').click(function () {
+            const selected =
+                $table.bootstrapTable(
+                    'getSelections'
+                );
+            if (selected.length !== 1) {
+                alert(
+                    '⚠️ Please select exactly ONE row to edit!'
+                );
+                return;
+            }
+            const row = selected[0];
+            $('#modalTitle').text(
+                'Edit Student'
+            );
+
+            $('#editId').val(
+                row.id
+            );
+
+            $('#fullName').val(
+                row.fullName
+            );
+
+            $('#sex').val(
+                row.sex
+            );
+
+            $('#email').val(
+                row.email
+            );
+
+            $('#dob').val(
+                row.dob
+            );
+
+            $('#phoneNumber').val(
+                row.phoneNumber
+            );
+
+            $('#fullName').prop(
+                'disabled',
+                false
+            );
+
+            $('#dob').prop(
+                'disabled',
+                false
+            );
+
+            $('#phoneNumber').prop(
+                'disabled',
+                false
+            );
+
+            $('#sex').prop(
+                'disabled',
+                false
+            );
+
+            $('#email').prop(
+                'disabled',
+                false
+            );
+
+
+            $('.btn-create').text(
+                '✓ Update'
+            );
+
+
+            $('#studentModal').modal(
+                'show'
+            );
+
+        });
+
+        // SUBMIT FORM
+
+        $('#studentForm').submit(function (e) {
+
+            e.preventDefault();
+            // GET EDIT ID
+
+            const editId =
+                $('#editId').val();
+
+            // FORMAT NAME
+            
+            const fullName =
+                formatName(
+                    $('#fullName').val()
+                );
+
+            // Show formatted name
+
+            $('#fullName').val(
+                fullName
+            );
+
+            // PHONE
+            const phone =
+                $('#phoneNumber')
+                    .val()
+                    .trim();
+
+
+            const cleanPhone =
+                phone.replace(/\s/g, '');
+
+            // PHONE VALIDATION
+        
+
+            if (!/^0\d{8,9}$/.test(cleanPhone)) {
+
+                alert(
+                    '❌ Phone number must start with 0 and contain 9 or 10 digits only!'
+                );
+
+                return;
+
+            }
+            
+            // FORMAT PHONE
+        
+            const formattedPhone =
+                formatPhone(cleanPhone);
+
+
+            $('#phoneNumber').val(
+                formattedPhone
+            );
+
+            // CHECK DUPLICATE PHONE
+            
+            if (
+                isDuplicatePhone(
+                    formattedPhone,
+                    editId
+                        ? parseInt(editId)
+                        : null
+                )
+            ) {
+
+                alert(
+                    '❌ This phone number already exists! Please use another phone number.'
+                );
+
+                return;
+
+            }
+
+
+            // ==========================================
+            // EMAIL
+            // ==========================================
+
+            const email =
+                $('#email')
+                    .val()
+                    .trim()
+                    .toLowerCase();
+
+
+            // ==========================================
+            // EMAIL MUST END WITH .COM
+            // ==========================================
+
+            if (!email.endsWith('.com')) {
+
+                alert(
+                    '❌ Email must end with .com!'
+                );
+
+                return;
+
+            }
+
+
+           
+            // EMAIL FORMAT
+            
+
+            if (!/^[^\s@]+@[^\s@]+\.com$/.test(email)) {
+
+                alert(
+                    '❌ Please enter a valid email address!'
+                );
+
+                return;
+
+            }
+
+            // CHECK DUPLICATE EMAIL
+            if (
+                isDuplicateEmail(
+                    email,
+                    editId
+                        ? parseInt(editId)
+                        : null
+                )
+            ) {
+
+                alert(
+                    '❌ This email already exists! Please use another email.'
+                );
+
+                return;
+            }
+            
+            // GET FORM DATA
+            const newData = {
+
+                fullName: fullName,
+
+                sex: $('#sex').val(),
+
+                phoneNumber: formattedPhone,
+
+                dob: $('#dob').val(),
+
+                email: email
+
+            };
+            // UPDATE STUDENT 
+            if (editId) {
+
+                const id =
+                    parseInt(editId);
+
+
+                const index =
+                    students.findIndex(
+                        function (student) {
+
+                            return student.id === id;
+
+                        }
+                    );
+
+
+                if (index !== -1) {
+
+                    students[index] = {
+
+                        id: id,
+
+                        fullName:
+                            newData.fullName,
+
+                        sex:
+                            newData.sex,
+
+                        phoneNumber:
+                            newData.phoneNumber,
+
+                        dob:
+                            newData.dob,
+
+                        email:
+                            newData.email
+
+                    };
+
+
+                    refreshTable();
+
+
+                    alert(
+                        '✅ Updated successfully!'
+                    );
+
+                }
+
+            }
+
+            // ADD STUDENT
+            else {
+
+                const nextId =
+                    students.length > 0
+                        ? Math.max(
+                            ...students.map(
+                                function (student) {
+
+                                    return student.id;
+
+                                }
+                            )
+                        ) + 1
+                        : 1;
+
+
+                const newStudent = {
+
+                    id: nextId,
+
+                    fullName:
+                        newData.fullName,
+
+                    sex:
+                        newData.sex,
+
+                    phoneNumber:
+                        newData.phoneNumber,
+
+                    dob:
+                        newData.dob,
+
+                    email:
+                        newData.email
+
+                };
+                students.push(
+                    newStudent
+                );
+                refreshTable();
+                alert(
+                    '✅ Added successfully!'
+                );
+
+            }
+
+            // CLOSE MODAL
+           
+            $('#studentModal').modal(
+                'hide'
+            );
+
+        });
+        // REMOVE BUTTON
+        $('#removeBtn').click(function () {
+
+            const selected =
+                $table.bootstrapTable(
+                    'getSelections'
+                );
+
+            if (selected.length === 0) {
+
+                alert(
+                    '⚠️ Please select row(s) to delete!'
+                );
+
+                return;
+            }
+            if (
+                confirm(
+                    `Delete ${selected.length} student(s)?`
+                )
+            ) {
+
+                const idsToDelete =
+                    selected.map(
+                        function (student) {
+
+                            return student.id;
+
+                        }
+                    );
+                students =
+                    students.filter(
+                        function (student) {
+
+                            return !idsToDelete.includes(
+                                student.id
+                            );
+
+                        }
+                    );
+
+                refreshTable();
+                alert(
+                    '✅ Deleted successfully!'
+                );
+
+            }
+
+        });
+
+    });
+
+</script>
+
+
+</body>
+
+</html>
